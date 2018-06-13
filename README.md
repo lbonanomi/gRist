@@ -9,7 +9,7 @@
 gRist is a simple script for indexing GitHub gists. Besides making a list, gRist attempts to categorize gists based on hashtags in comment[0] and flag duplicate files. The author is a cimpulsive note taker who is beaing weaned off-of Google Keep.
 
 
-![gRist screencap](https://gitlab.com/lbonanomi/gRist/blob/doc/images/gRist.png)
+![gRist screencap](https://gitlab.com/lbonanomi/gRist/blob/doc/source/images/gRist_screencap.png)
 
 ## How would I run this?
 
