@@ -12,7 +12,7 @@ Additionally, gRist attempts to categorize gists based on hashtags found in the 
 
 ## Whats the point? GitHub already offers a list of all your gists and there are clients for phones.
 
-GitHub absolutely offers a list of gists in their web interface, but the author finds the 30-gists-per-page limit frustrating and no mobile client offers a table of contents.
+GitHub absolutely offers a list of gists in their web interface, but the author finds the 30-gists-per-page limit frustrating in the face of his 500+ gist collection and no mobile client offers a table of contents.
 
 The author is a cumpulsive note taker who is beaing weaned off-of Google Keep.
 
@@ -27,3 +27,8 @@ The author is a cumpulsive note taker who is beaing weaned off-of Google Keep.
 Create a gist named index.md
 Consider starring this gist so it isn't easily misplaced 
 Stow an API token blessed for 'gist' access somewhere safe-ish and update the ```token_file``` assignment at the top.
+
+
+## Known issues
+
+The author's workflow is one-file-per gist, YMMV if you include multiple files in a single gist.
