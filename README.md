@@ -13,7 +13,7 @@ gRist is a simple python script for indexing a user's GitHub gists. gRist:
 * Flag duplicated gists.  
 
 
-## Whats the point? GitHub already offers a list of all your gists and there are clients for phones.
+## What's the point? GitHub already offers a list of all your gists and there are clients for phones.
 
 GitHub absolutely offers a list of gists in their web interface, but the author finds the 30-gists-per-page limit frustrating in the face of his 500+ gist collection and no mobile client offers a table of contents.
 
