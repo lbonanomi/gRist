@@ -12,7 +12,7 @@ gRist:
 
 * Generates a single gist with an index of all other gists by description (or gist name if the description field is empty).  
 * Attempts to categorize gists based on hashtags found in the 0th-comment 
-* Flag duplicated gists.  
+* Flags duplicated gists.  
 
 
 ## What's the point? GitHub already offers a list of all your gists and there are clients for phones.
