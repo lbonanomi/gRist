@@ -37,3 +37,8 @@ Stow an API token blessed for 'gist' access somewhere safe-ish and update the ``
 ## Known issues
 
 The author's workflow is one-file-per gist, YMMV if you include multiple files in a single gist.
+
+
+## Hat-Tip
+
+vpekar from https://stackoverflow.com/questions/15173225
