@@ -11,8 +11,8 @@ gRist is a simple python script for indexing a user's GitHub gists.
 gRist:
 
 * Generates a single gist with an index of all other gists by description (or gist name if the description field is empty).  
-* Attempts to categorize gists based on hashtags found in the 0th-comment 
-* Flags duplicated gists.  
+* Attempts to categorize gists based on hashtags found in the 0th-comment.
+* Attempts to flag duplicated gists (cosine similarity of content > 80%).  
 
 
 ## What's the point? GitHub already offers a list of all your gists and there are clients for phones.
