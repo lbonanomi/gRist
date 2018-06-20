@@ -31,7 +31,7 @@ tag_hash = {}
 git_user = 'lbonanomi'
 
 
-token_file = '/home/lbonanomi2/.ssh/gist_token'
+token_file = '~/.ssh/gist_token'
 try:
     with open(token_file) as token_file:
         token_value = token_file.readline().strip()
