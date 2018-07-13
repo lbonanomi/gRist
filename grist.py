@@ -13,7 +13,7 @@ from collections import Counter
 
 import glob
 import itertools
-import string        # Replace this with an re call later
+import string
 import tempfile
 
 import requests
@@ -28,10 +28,10 @@ os.mkdir(tempdir + '/tags')
 hashes = {}
 tag_hash = {}
 
-git_user = 'lbonanomi'
+git_user = 'some_engineer'
 
 
-token_file = '~/.ssh/gist_token'
+token_file = '/home/some_engineer/.ssh/gist_token'
 try:
     with open(token_file) as token_file:
         token_value = token_file.readline().strip()
