@@ -177,7 +177,8 @@ for a, b in itertools.combinations(sorted(glob.glob(tempdir + '/*')), 2):
 
                         line = line.strip()
 
-                        line = line + " " + str(int(cozy * 100)) + "% dupe confidence: " + os.path.basename(b) + ",\n"
+                        #line = line + " " + str(int(cozy * 100)) + "% dupe confidence: " + os.path.basename(b) + ",\n"
+                        line = line + "  \n    - Possible duplicate of " + os.path.basename(b) + "  (" + str(int(cozy * 100)) + "% confidence)  \n"
 
                     tagfile_handle.write(line)
 
