@@ -1,4 +1,4 @@
-#!/opt/bb/bin/python
+#!/usr/bin/python
 
 """Build an index of GitHub gists"""
 
