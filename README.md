@@ -29,9 +29,9 @@ The author is a cumpulsive note taker who is beaing weaned off-of Google Keep.
 
 ## How would I run this?
 
-Create a gist named index.md
-Consider starring this gist so it isn't easily misplaced 
-Stow an API token blessed for 'gist' access somewhere safe-ish and update the ```token_file``` assignment at the top.
+Create a gist named index.md  
+Consider starring this gist so it isn't easily misplaced  
+Stow an API token blessed for 'gist' access somewhere safe-ish and update the ```token_file``` assignment at the top.  
 
 
 ## Known issues
