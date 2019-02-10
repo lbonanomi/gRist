@@ -26,10 +26,10 @@ os.mkdir(tempdir + '/tags')
 hashes = {}
 tag_hash = {}
 
-git_user = 'lbonanomi'
+git_user = 'some_engineer'
 
+token_file = '/home/some_engineer/.ssh/gist_token'
 
-token_file = 'gist_token'
 try:
     with open(token_file) as token_file:
         token_value = token_file.readline().strip()
@@ -63,9 +63,9 @@ def get_cosine(vec1, vec2):
 def screen_count(gists_per_page):
     """count how many cycles needed to scrape GitHub @ 30 items per-page"""
 
-    gist_url = 'https://api.github.com/users/' + git_user + '/gists?per_page=' + str(gists_per_page)
+    count_gist_url = 'https://api.github.com/users/' + git_user + '/gists?per_page=' + str(gists_per_page)
 
-    all_gists = requests.get(gist_url, auth=plain_user, verify=False)
+    all_gists = requests.get(count_gist_url, auth=plain_user, verify=False)
 
     # Drop punctuation
     clean = all_gists.headers['Link'].translate(str.maketrans(string.punctuation, ' '*len(string.punctuation)))
