@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/bin/python36
 
 """Build an index of GitHub gists"""
 
@@ -19,8 +19,6 @@ import tempfile
 import requests
 from requests.auth import HTTPBasicAuth
 
-
-
 tempdir = tempfile.mkdtemp()
 
 os.mkdir(tempdir + '/tags')
@@ -28,15 +26,15 @@ os.mkdir(tempdir + '/tags')
 hashes = {}
 tag_hash = {}
 
-git_user = 'some_engineer'
+git_user = 'lbonanomi'
 
 
-token_file = '/home/some_engineer/.ssh/gist_token'
+token_file = 'gist_token'
 try:
     with open(token_file) as token_file:
         token_value = token_file.readline().strip()
-except Exception:
-    print "No token data"
+except FileNotFoundError:
+    print("No token data")
     sys.exit(3)
 
 
@@ -55,9 +53,11 @@ def get_cosine(vec1, vec2):
     denominator = math.sqrt(sum1) * math.sqrt(sum2)
 
     if not denominator:
-        return 0.0
+        retval = 0.0
     else:
-        return float(numerator) / denominator
+        retval = float(numerator) / denominator
+
+    return retval
 
 
 def screen_count(gists_per_page):
@@ -68,7 +68,7 @@ def screen_count(gists_per_page):
     all_gists = requests.get(gist_url, auth=plain_user, verify=False)
 
     # Drop punctuation
-    clean = all_gists.headers['Link'].translate(string.maketrans(string.punctuation, ' '*len(string.punctuation)))
+    clean = all_gists.headers['Link'].translate(str.maketrans(string.punctuation, ' '*len(string.punctuation)))
 
     # Re-break on whitespace
     clean_list = clean.split()
@@ -81,16 +81,16 @@ def screen_count(gists_per_page):
 def topical(filename, gist_id, gist_description):
     """Group gists based-on hashtags in comment"""
 
-    #
-    # Ask me later
-    #
-
     gist_comments_url = 'https://api.github.com/gists/' + gist_id + '/comments'
 
     gist_comments = requests.get(gist_comments_url, auth=plain_user, verify=False).json()
 
     # No comments at-all
     #
+
+    if gist_description is None:
+        gist_description = ""
+
 
     if gist_description != "Generated Index":
         if len(gist_comments) == 0:
@@ -102,8 +102,6 @@ def topical(filename, gist_id, gist_description):
     for gist_comment in gist_comments:
         for tag in gist_comment['body'].split():
             if tag.startswith('#'):
-                #tagged = 1
-
                 tag = re.sub('#', '', tag)
 
                 with open(tempdir + '/tags/' + tag, 'a') as tag_buffer:
@@ -144,7 +142,7 @@ while int(this_screen) <= int(screen_count_value):
                         buffer_handle.write(source)
 
             except Exception as e:
-                print str(e)
+                print(str(e))
                 continue
 
     this_screen = this_screen + 1
@@ -177,8 +175,8 @@ for a, b in itertools.combinations(sorted(glob.glob(tempdir + '/*')), 2):
 
                         line = line.strip()
 
-                        #line = line + " " + str(int(cozy * 100)) + "% dupe confidence: " + os.path.basename(b) + ",\n"
-                        line = line + "  \n    - Possible duplicate of " + os.path.basename(b) + "  (" + str(int(cozy * 100)) + "% confidence)  \n"
+                        line = line + "  \n    - Possible duplicate of " + os.path.basename(b)
+                        line = line + "  (" + str(int(cozy * 100)) + "% confidence)  \n"
 
                     tagfile_handle.write(line)
 
@@ -207,7 +205,6 @@ for unclassified in open(tempdir + '/tags/untagged').readlines():
     new_index.write(unclassified)
 
 new_index.close()
-
 
 gist_index_url = 'https://api.github.com/gists/' + str(hashes['index.md'])
 
