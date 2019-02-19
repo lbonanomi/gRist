@@ -1,5 +1,7 @@
 #!/bin/python36
 
+# pylint: disable=C0103
+
 """Build an index of GitHub gists"""
 
 
