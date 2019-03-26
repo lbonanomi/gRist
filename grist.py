@@ -28,16 +28,25 @@ os.mkdir(tempdir + '/tags')
 hashes = {}
 tag_hash = {}
 
-git_user = 'some_engineer'
 
-token_file = '/home/some_engineer/.ssh/gist_token'
+netrc_name = os.environ['HOME'] + '/.netrc'
 
-try:
-    with open(token_file) as token_file:
-        token_value = token_file.readline().strip()
-except FileNotFoundError:
-    print("No token data")
-    sys.exit(3)
+if os.path.exists(netrc_name):
+	with open(netrc_name) as netrc_file:
+		netrc_data = netrc_file.readlines()
+
+	field_counter = 0
+
+	for field in netrc_data:
+		if 'github.com' in field:
+			git_user = (netrc_data[field_counter - 3]).split()[1]
+			token_value = netrc_data[field_counter + 2].split()[1]
+		field_counter = field_counter+1
+	
+else:
+	print("Couldn't find ~/.netrc")
+	sys.exit(2)
+
 
 
 plain_user = HTTPBasicAuth('', token_value)
