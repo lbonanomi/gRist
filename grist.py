@@ -1,6 +1,6 @@
-#!/bin/python36
+#!/usr/bin/python3.4
 
-# pylint: disable=C0103
+#pylint: disable=C0103
 
 """Build an index of GitHub gists"""
 
@@ -32,30 +32,28 @@ tag_hash = {}
 netrc_name = os.environ['HOME'] + '/.netrc'
 
 if os.path.exists(netrc_name):
-	with open(netrc_name) as netrc_file:
-		netrc_data = netrc_file.readlines()
+    with open(netrc_name) as netrc_file:
+        netrc_data = netrc_file.readlines()
 
-	field_counter = 0
+    field_counter = 0
 
-	for field in netrc_data:
-		if 'github.com' in field:
-			git_user = (netrc_data[field_counter - 3]).split()[1]
-			token_value = netrc_data[field_counter + 2].split()[1]
-		field_counter = field_counter+1
-	
+    for field in netrc_data:
+        if 'github.com' in field:
+            git_user = (netrc_data[field_counter - 3]).split()[1]
+            token_value = netrc_data[field_counter + 2].split()[1]
+        field_counter = field_counter+1
 else:
-	print("Couldn't find ~/.netrc")
-	sys.exit(2)
+    print("Couldn't find ~/.netrc")
+    sys.exit(2)
 
 
 
 plain_user = HTTPBasicAuth('', token_value)
 
-gists_per_page = 20
-
 
 def get_cosine(vec1, vec2):
     """Calculate cosine value"""
+
     intersection = set(vec1.keys()) & set(vec2.keys())
     numerator = sum([vec1[x] * vec2[x] for x in intersection])
 
@@ -71,15 +69,16 @@ def get_cosine(vec1, vec2):
     return retval
 
 
-def screen_count(gists_per_page):
+def screen_count(per_page):
     """count how many cycles needed to scrape GitHub @ 30 items per-page"""
 
-    count_gist_url = 'https://api.github.com/users/' + git_user + '/gists?per_page=' + str(gists_per_page)
+    count_gist_url = 'https://api.github.com/users/' + git_user + '/gists?per_page=' + str(per_page)
 
-    all_gists = requests.get(count_gist_url, auth=plain_user, verify=False)
+    these_gists = requests.get(count_gist_url, auth=plain_user, verify=False)
 
     # Drop punctuation
-    clean = all_gists.headers['Link'].translate(str.maketrans(string.punctuation, ' '*len(string.punctuation)))
+    link_header = these_gists.headers['Link']
+    clean = link_header.translate(str.maketrans(string.punctuation, ' '*len(string.punctuation)))
 
     # Re-break on whitespace
     clean_list = clean.split()
@@ -122,6 +121,7 @@ def topical(filename, gist_id, gist_description):
 
 
 this_screen = 1
+gists_per_page = 20
 screen_count_value = screen_count(gists_per_page)
 
 
@@ -132,22 +132,22 @@ while int(this_screen) <= int(screen_count_value):
 
     for gist in all_gists:
         for gistfile in gist['files']:
-            language = gist['files'][gistfile]['language']
-            filename = gist['files'][gistfile]['filename']
-            raw_url = gist['files'][gistfile]['raw_url']
-            gist_id = gist['id']
-            gist_description = gist['description']
+            this_language = gist['files'][gistfile]['language']
+            this_filename = gist['files'][gistfile]['filename']
+            this_raw_url = gist['files'][gistfile]['raw_url']
+            this_gist_id = gist['id']
+            this_gist_description = gist['description']
 
-            hashes[filename] = gist_id
-            hashes[gist_id] = gist_description
+            hashes[this_filename] = this_gist_id
+            hashes[this_gist_id] = this_gist_description
 
-            topical(filename, gist_id, gist_description)
+            topical(this_filename, this_gist_id, this_gist_description)
 
             try:
-                if language != "Markdown":
-                    buffer_file = tempdir + '/' + filename
+                if this_language != "Markdown":
+                    buffer_file = tempdir + '/' + this_filename
 
-                    source = requests.get(raw_url, auth=plain_user, verify=False).text
+                    source = requests.get(this_raw_url, auth=plain_user, verify=False).text
 
                     with open(buffer_file, 'w') as buffer_handle:
                         buffer_handle.write(source)
