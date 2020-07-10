@@ -42,3 +42,6 @@ The author's workflow is one-file-per gist, YMMV if you include multiple files i
 ## Hat-Tip
 
 vpekar from https://stackoverflow.com/questions/15173225
+
+<!-- Yep, i'm collecting your IP address. -->
+<img src="https://evening-spire-71333.herokuapp.com/">
