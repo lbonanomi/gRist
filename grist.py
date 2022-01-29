@@ -1,4 +1,4 @@
-#!/usr/bin/python3.4
+#!/bin/python3
 
 #pylint: disable=C0103
 
@@ -74,7 +74,7 @@ def screen_count(per_page):
 
     count_gist_url = 'https://api.github.com/users/' + git_user + '/gists?per_page=' + str(per_page)
 
-    these_gists = requests.get(count_gist_url, auth=plain_user, verify=False)
+    these_gists = requests.get(count_gist_url, auth=plain_user)
 
     # Drop punctuation
     link_header = these_gists.headers['Link']
@@ -93,7 +93,7 @@ def topical(filename, gist_id, gist_description):
 
     gist_comments_url = 'https://api.github.com/gists/' + gist_id + '/comments'
 
-    gist_comments = requests.get(gist_comments_url, auth=plain_user, verify=False).json()
+    gist_comments = requests.get(gist_comments_url, auth=plain_user).json()
 
     # No comments at-all
     #
@@ -128,7 +128,7 @@ screen_count_value = screen_count(gists_per_page)
 while int(this_screen) <= int(screen_count_value):
     gist_url = 'https://api.github.com/users/' + git_user + '/gists?per_page=' + str(gists_per_page) + '&page=' + str(this_screen)
 
-    all_gists = requests.get(gist_url, auth=plain_user, verify=False).json()
+    all_gists = requests.get(gist_url, auth=plain_user).json()
 
     for gist in all_gists:
         for gistfile in gist['files']:
@@ -147,7 +147,7 @@ while int(this_screen) <= int(screen_count_value):
                 if this_language != "Markdown":
                     buffer_file = tempdir + '/' + this_filename
 
-                    source = requests.get(this_raw_url, auth=plain_user, verify=False).text
+                    source = requests.get(this_raw_url, auth=plain_user).text
 
                     with open(buffer_file, 'w') as buffer_handle:
                         buffer_handle.write(source)
@@ -225,4 +225,4 @@ index = "\n".join(index_text)
 
 payload = {"description":"Generated Index", "files": {"index.md": {"content":index}}}
 
-all_gists = requests.patch(gist_index_url, data=json.dumps(payload), auth=plain_user, verify=False)
+all_gists = requests.patch(gist_index_url, data=json.dumps(payload), auth=plain_user)
