@@ -4,7 +4,7 @@
 > –Ray Bradbury
 
 
-## Whats this?
+## What's this?
 
 gRist is a simple python script for indexing a user's GitHub gists.  
 
@@ -19,7 +19,7 @@ gRist:
 
 GitHub absolutely offers a list of gists in their web interface, but the author finds the 30-gists-per-page limit frustrating in the face of his 500+ gist collection and no mobile client offers a table of contents.
 
-The author is a cumpulsive note taker who is beaing weaned off-of Google Keep.
+The author is a compulsive note taker who is beaing weaned off-of Google Keep.
 
 
 ## Got a screenshot?
